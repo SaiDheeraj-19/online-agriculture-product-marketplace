@@ -1948,6 +1948,7 @@ tbody tr:hover { background: rgba(239, 234, 223, 0.45); }
 .hero-figures div {
   display: flex;
   flex-direction: column-reverse;
+  justify-content: flex-end;
   gap: 6px;
 }
 

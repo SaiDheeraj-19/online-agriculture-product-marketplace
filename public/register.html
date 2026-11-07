@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create account · Online Agriculture Product Marketplace</title>
+  <meta name="description" content="Join the Online Agriculture Product Marketplace as a farmer selling produce or a customer buying fresh food." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="auth-page">
+    <div class="auth-card">
+      <section class="auth-aside">
+        <a class="auth-brand" href="index.html">
+          <span class="brand-mark">🌾</span>
+          <span>AgriMart</span>
+        </a>
+        <h1>Grow your market. Share your harvest.</h1>
+        <p>
+          Join a marketplace built for both sides of the table — farmers list what
+          they grow, customers order it fresh.
+        </p>
+        <ul class="auth-points">
+          <li><span aria-hidden="true">👨‍🌾</span> List products and manage stock</li>
+          <li><span aria-hidden="true">📦</span> Receive and fulfil customer orders</li>
+          <li><span aria-hidden="true">🛍️</span> Shop directly from local farms</li>
+        </ul>
+      </section>
+
+      <section class="auth-form-panel">
+        <a class="auth-mobile-brand" href="index.html">
+          <span class="brand-mark">🌾</span>
+          <span>AgriMart</span>
+        </a>
+        <h2>Create your account</h2>
+        <p class="muted">It takes less than a minute.</p>
+
+        <form id="register-form" class="form" novalidate>
+          <div class="role-toggle" role="radiogroup" aria-label="Account type">
+            <label>
+              <input type="radio" name="role" value="customer" checked />
+              <span>🛍️ Customer<small>Buy fresh produce</small></span>
+            </label>
+            <label>
+              <input type="radio" name="role" value="farmer" />
+              <span>👨‍🌾 Farmer<small>Sell your harvest</small></span>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Full name</span>
+            <input type="text" name="name" placeholder="e.g. Ananya Sharma" maxlength="100" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@example.com" maxlength="100" autocomplete="email" required />
+          </label>
+          <label class="field">
+            <span>Phone <span class="muted" style="font-weight:400;">(optional)</span></span>
+            <input type="tel" name="phone" placeholder="10-digit mobile number" maxlength="15" autocomplete="tel" />
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" name="password" placeholder="At least 6 characters" minlength="6" maxlength="72" autocomplete="new-password" required />
+          </label>
+
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit" id="register-submit">Create account</button>
+        </form>
+
+        <p class="auth-switch">Already have an account? <a href="login.html">Log in</a></p>
+        <p class="auth-switch" style="margin-top:8px;"><a href="index.html">← Back to the marketplace</a></p>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

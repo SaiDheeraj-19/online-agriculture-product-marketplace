@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Agriculture Product Marketplace · Saidheeraj</title>
+  <meta name="description" content="Buy fresh produce directly from local farmers. Farmers list products, update prices and stock; customers browse and place orders." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Online Agriculture Product Marketplace home">
+        <span class="brand-mark">🌾</span>
+        <span class="brand-text">
+          <strong>AgriMart</strong>
+          <small>Online Agriculture Product Marketplace</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Marketplace</a>
+        <a class="nav-link" href="orders.html" data-role-only="customer" hidden>My Orders</a>
+        <a class="nav-link" href="farmer.html" data-role-only="farmer" hidden>Farmer Dashboard</a>
+        <button class="cart-btn" type="button" id="open-cart" aria-label="Open shopping basket">
+          <span aria-hidden="true">🧺</span>
+          <span class="cart-label">Basket</span>
+          <span class="cart-count" data-cart-count>0</span>
+        </button>
+        <div id="auth-nav" class="auth-nav"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Farm to table, made simple</span>
+          <h1>Fresh from the farm,<br /><em>straight to your door.</em></h1>
+          <p>
+            Discover produce listed directly by local farmers. Fair prices for growers,
+            fresher food for your family — no middlemen in between.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#products">Browse the harvest</a>
+            <a class="btn btn-ghost" href="register.html">Sell as a farmer</a>
+          </div>
+          <ul class="hero-stats">
+            <li><strong id="stat-products">—</strong><span>Products listed</span></li>
+            <li><strong id="stat-farmers">—</strong><span>Local farmers</span></li>
+            <li><strong id="stat-categories">—</strong><span>Categories</span></li>
+          </ul>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="harvest-card">
+            <div class="harvest-top"><span class="dot"></span> Fresh today</div>
+            <div class="produce-grid">
+              <span>🥬</span>
+              <span>🍅</span>
+              <span>🥭</span>
+              <span>🌾</span>
+              <span>🥛</span>
+              <span>🌶️</span>
+            </div>
+            <p>Hand-picked listings from farms near you</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="products">
+      <div class="section-head">
+        <div>
+          <h2>Today's harvest</h2>
+          <p class="muted">Browse what local farmers are selling right now.</p>
+        </div>
+        <label class="search-box" for="search">
+          <span aria-hidden="true">🔍</span>
+          <input id="search" type="search" placeholder="Search produce, category or farm…" autocomplete="off" />
+        </label>
+      </div>
+
+      <div id="category-pills" class="pill-row" aria-label="Filter by category"></div>
+
+      <div id="product-grid" class="product-grid" aria-live="polite"></div>
+
+      <div id="products-empty" class="empty-state" hidden>
+        <span class="empty-emoji" aria-hidden="true">🌱</span>
+        <h3>No produce found</h3>
+        <p>Try another search or category — new produce is listed every day.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand">🌾 AgriMart</p>
+        <p class="muted small">Online Agriculture Product Marketplace — connecting farmers with customers.</p>
+      </div>
+      <p class="muted small">© <span data-year></span> Online Agriculture Product Marketplace · <strong>Saidheeraj</strong></p>
+    </div>
+  </footer>
+
+  <div class="drawer-overlay" id="cart-overlay"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping basket" aria-hidden="true">
+    <div class="drawer-head">
+      <h2>Your basket</h2>
+      <button class="icon-btn" type="button" id="close-cart" aria-label="Close basket">✕</button>
+    </div>
+    <div class="drawer-body" id="cart-items"></div>
+    <div class="drawer-foot">
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cart-total">₹0.00</strong>
+      </div>
+      <label class="field" for="delivery-address">
+        <span>Delivery address</span>
+        <textarea id="delivery-address" rows="2" maxlength="255" placeholder="House no, street, city, PIN code"></textarea>
+      </label>
+      <button class="btn btn-primary btn-block" type="button" id="place-order">Place order</button>
+      <p class="small muted center" style="margin-top:8px;">Final prices and stock are confirmed when the order is placed.</p>
+    </div>
+  </aside>
+
+  <script src="js/common.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

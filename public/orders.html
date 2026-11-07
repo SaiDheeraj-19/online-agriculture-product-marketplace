@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders · Online Agriculture Product Marketplace</title>
+  <meta name="description" content="View your order history and track every basket from farm to doorstep." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Online Agriculture Product Marketplace home">
+        <span class="brand-mark">🌾</span>
+        <span class="brand-text">
+          <strong>AgriMart</strong>
+          <small>Online Agriculture Product Marketplace</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Marketplace</a>
+        <a class="nav-link" href="orders.html" data-role-only="customer" hidden>My Orders</a>
+        <a class="nav-link" href="farmer.html" data-role-only="farmer" hidden>Farmer Dashboard</a>
+        <div id="auth-nav" class="auth-nav"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="page-head">
+      <div>
+        <span class="eyebrow">My account</span>
+        <h1>Your orders</h1>
+        <p class="muted">Track every basket from farm to doorstep.</p>
+      </div>
+      <a class="btn btn-ghost" href="index.html">← Continue shopping</a>
+    </div>
+
+    <div id="orders-list" class="orders-list" aria-live="polite"></div>
+
+    <div id="orders-empty" class="empty-state" hidden>
+      <span class="empty-emoji" aria-hidden="true">🧺</span>
+      <h3>No orders yet</h3>
+      <p>Your first basket of fresh produce is waiting in the marketplace.</p>
+      <p style="margin-top:16px;"><a class="btn btn-primary" href="index.html">Browse the harvest</a></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand">🌾 AgriMart</p>
+        <p class="muted small">Online Agriculture Product Marketplace — connecting farmers with customers.</p>
+      </div>
+      <p class="muted small">© <span data-year></span> Online Agriculture Product Marketplace · <strong>Saidheeraj</strong></p>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/orders.js"></script>
+</body>
+</html>

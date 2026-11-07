@@ -1,0 +1,26 @@
+{
+  "name": "online-agriculture-product-marketplace",
+  "version": "1.0.0",
+  "description": "Online Agriculture Product Marketplace - connecting farmers with customers. Built with HTML, CSS, JavaScript, Express.js and MySQL.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node database/seed.js"
+  },
+  "keywords": [
+    "agriculture",
+    "marketplace",
+    "express",
+    "mysql",
+    "full-stack"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mysql2": "^3.12.0"
+  }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in · Online Agriculture Product Marketplace</title>
+  <meta name="description" content="Log in to the Online Agriculture Product Marketplace to shop for fresh produce or manage your farm listings." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="auth-page">
+    <div class="auth-card">
+      <section class="auth-aside">
+        <a class="auth-brand" href="index.html">
+          <span class="brand-mark">🌾</span>
+          <span>AgriMart</span>
+        </a>
+        <h1>Good food starts with good farmers.</h1>
+        <p>
+          Welcome back to the Online Agriculture Product Marketplace — where every
+          basket supports a local grower.
+        </p>
+        <ul class="auth-points">
+          <li><span aria-hidden="true">🧺</span> Fresh produce listed daily</li>
+          <li><span aria-hidden="true">💸</span> Fair, farmer-set prices</li>
+          <li><span aria-hidden="true">🚚</span> Simple order tracking</li>
+        </ul>
+      </section>
+
+      <section class="auth-form-panel">
+        <a class="auth-mobile-brand" href="index.html">
+          <span class="brand-mark">🌾</span>
+          <span>AgriMart</span>
+        </a>
+        <h2>Welcome back</h2>
+        <p class="muted">Log in to shop for fresh produce or manage your farm.</p>
+
+        <form id="login-form" class="form" novalidate>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" name="password" placeholder="Your password" autocomplete="current-password" required />
+          </label>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit" id="login-submit">Log in</button>
+        </form>
+
+        <div class="demo-box">
+          <p class="small"><strong>Demo accounts</strong> · password <code>password123</code></p>
+          <div class="demo-actions">
+            <button class="btn btn-ghost btn-sm" type="button" data-demo="customer">🛍️ Customer demo</button>
+            <button class="btn btn-ghost btn-sm" type="button" data-demo="farmer">👨‍🌾 Farmer demo</button>
+          </div>
+        </div>
+
+        <p class="auth-switch">New here? <a href="register.html">Create an account</a></p>
+        <p class="auth-switch" style="margin-top:8px;"><a href="index.html">← Back to the marketplace</a></p>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

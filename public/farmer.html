@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmer Dashboard · Online Agriculture Product Marketplace</title>
+  <meta name="description" content="Manage your farm listings, update prices and stock, and fulfil customer orders." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Online Agriculture Product Marketplace home">
+        <span class="brand-mark">🌾</span>
+        <span class="brand-text">
+          <strong>AgriMart</strong>
+          <small>Online Agriculture Product Marketplace</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Marketplace</a>
+        <a class="nav-link" href="farmer.html" data-role-only="farmer" hidden>Farmer Dashboard</a>
+        <a class="nav-link" href="orders.html" data-role-only="customer" hidden>My Orders</a>
+        <div id="auth-nav" class="auth-nav"></div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="page-head">
+      <div>
+        <span class="eyebrow">Farmer dashboard</span>
+        <h1>Your farm, at a glance</h1>
+        <p class="muted">Manage listings, keep stock fresh and fulfil incoming orders.</p>
+      </div>
+      <button class="btn btn-primary" type="button" id="add-product-btn">＋ Add product</button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" aria-hidden="true">🌱</div>
+        <div>
+          <p class="stat-value" id="stat-products">0</p>
+          <p class="stat-label">Products listed</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" aria-hidden="true">📦</div>
+        <div>
+          <p class="stat-value" id="stat-stock">0</p>
+          <p class="stat-label">Units in stock</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" aria-hidden="true">🧾</div>
+        <div>
+          <p class="stat-value" id="stat-orders">0</p>
+          <p class="stat-label">Orders received</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" aria-hidden="true">💰</div>
+        <div>
+          <p class="stat-value" id="stat-revenue">₹0.00</p>
+          <p class="stat-label">Sales (excl. cancelled)</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Your products</h2>
+        <span class="muted small" id="products-count"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="products-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Orders received</h2>
+        <span class="muted small" id="orders-count"></span>
+      </div>
+      <div id="farmer-orders"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand">🌾 AgriMart</p>
+        <p class="muted small">Online Agriculture Product Marketplace — connecting farmers with customers.</p>
+      </div>
+      <p class="muted small">© <span data-year></span> Online Agriculture Product Marketplace · <strong>Saidheeraj</strong></p>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="product-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head">
+        <h2 id="modal-title">Add product</h2>
+        <button class="icon-btn" type="button" data-close-modal aria-label="Close dialog">✕</button>
+      </div>
+      <form id="product-form" class="form" novalidate>
+        <input type="hidden" name="product_id" />
+        <label class="field">
+          <span>Product name</span>
+          <input type="text" name="product_name" maxlength="150" placeholder="e.g. Vine-Ripened Tomatoes" required />
+        </label>
+        <div class="form-row">
+          <label class="field">
+            <span>Category</span>
+            <input type="text" name="category" list="category-options" maxlength="50" placeholder="Vegetables" required />
+            <datalist id="category-options">
+              <option value="Vegetables"></option>
+              <option value="Fruits"></option>
+              <option value="Grains"></option>
+              <option value="Dairy"></option>
+              <option value="Pulses"></option>
+              <option value="Spices"></option>
+            </datalist>
+          </label>
+          <label class="field">
+            <span>Price (₹)</span>
+            <input type="number" name="price" min="0.01" step="0.01" placeholder="40.00" required />
+          </label>
+          <label class="field">
+            <span>Stock quantity</span>
+            <input type="number" name="quantity" min="0" step="1" placeholder="100" required />
+          </label>
+        </div>
+        <label class="field">
+          <span>Description</span>
+          <textarea name="description" rows="3" maxlength="2000" placeholder="Variety, growing method, unit (per kg, per dozen)…"></textarea>
+        </label>
+        <p class="form-error" id="product-error" role="alert" hidden></p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" type="button" data-close-modal>Cancel</button>
+          <button class="btn btn-primary" type="submit" id="product-submit">Save product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/farmer.js"></script>
+</body>
+</html>

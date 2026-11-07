@@ -3,38 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Log in · Online Agriculture Product Marketplace</title>
-  <meta name="description" content="Log in to the Online Agriculture Product Marketplace to shop for fresh produce or manage your farm listings." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+  <title>Log in · AgriMart</title>
+  <meta name="description" content="Log in to AgriMart to shop for produce or manage your farm listings." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='12' fill='%2313261c'/><path d='M12 19V9M12 12.5c-2 0-3.5-1.5-3.5-3.5 2 0 3.5 1.5 3.5 3.5zm0 0c2 0 3.5-1.5 3.5-3.5-2 0-3.5 1.5-3.5 3.5zm0 3.5c-2 0-3.5-1.5-3.5-3.5 2 0 3.5 1.5 3.5 3.5zm0 0c2 0 3.5-1.5 3.5-3.5-2 0-3.5 1.5-3.5 3.5z' fill='none' stroke='%23d9c08c' stroke-width='1.4'/></svg>" />
+  <link rel="preconnect" href="https://thumb.wikimedia.org" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-  <main class="auth-page">
-    <div class="auth-card">
-      <section class="auth-aside">
-        <a class="auth-brand" href="index.html">
-          <span class="brand-mark">🌾</span>
-          <span>AgriMart</span>
-        </a>
-        <h1>Good food starts with good farmers.</h1>
-        <p>
-          Welcome back to the Online Agriculture Product Marketplace — where every
-          basket supports a local grower.
-        </p>
-        <ul class="auth-points">
-          <li><span aria-hidden="true">🧺</span> Fresh produce listed daily</li>
-          <li><span aria-hidden="true">💸</span> Fair, farmer-set prices</li>
-          <li><span aria-hidden="true">🚚</span> Simple order tracking</li>
-        </ul>
-      </section>
+<body class="auth-body">
+  <main class="auth-split" id="main">
+    <section class="auth-visual" aria-hidden="true">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Apatani_Rice_Paddies.jpg/1280px-Apatani_Rice_Paddies.jpg" alt="" />
+      <div class="auth-visual-shade"></div>
+      <a class="auth-visual-brand" href="index.html" tabindex="-1">AgriMart</a>
+      <blockquote class="auth-visual-quote">
+        <p>“Know where your food comes from, and who you're paying for it.”</p>
+        <cite>Rice terraces, Ziro valley · Photo: K. N. Chaudhuri</cite>
+      </blockquote>
+    </section>
 
-      <section class="auth-form-panel">
-        <a class="auth-mobile-brand" href="index.html">
-          <span class="brand-mark">🌾</span>
+    <section class="auth-panel">
+      <div class="auth-panel-inner">
+        <a class="auth-logo" href="index.html">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V8"/><path d="M12 12c-2.5 0-4.5-2-4.5-4.5C10 7.5 12 9.5 12 12z"/><path d="M12 12c2.5 0 4.5-2 4.5-4.5C14 7.5 12 9.5 12 12z"/><path d="M12 16.5c-2.5 0-4.5-2-4.5-4.5 2.5 0 4.5 2 4.5 4.5z"/><path d="M12 16.5c2.5 0 4.5-2 4.5-4.5-2.5 0-4.5 2-4.5 4.5z"/><path d="M12 8c-1-1-1-3 0-5 1 2 1 4 0 5z"/></svg></span>
           <span>AgriMart</span>
         </a>
-        <h2>Welcome back</h2>
-        <p class="muted">Log in to shop for fresh produce or manage your farm.</p>
+
+        <h1>Welcome back</h1>
+        <p class="auth-sub">Log in to shop or manage your farm.</p>
 
         <form id="login-form" class="form" novalidate>
           <label class="field">
@@ -46,21 +41,19 @@
             <input type="password" name="password" placeholder="Your password" autocomplete="current-password" required />
           </label>
           <p class="form-error" id="form-error" role="alert" hidden></p>
-          <button class="btn btn-primary btn-block" type="submit" id="login-submit">Log in</button>
+          <button class="btn btn-primary btn-block btn-lg" type="submit" id="login-submit">Log in</button>
         </form>
 
-        <div class="demo-box">
-          <p class="small"><strong>Demo accounts</strong> · password <code>password123</code></p>
-          <div class="demo-actions">
-            <button class="btn btn-ghost btn-sm" type="button" data-demo="customer">🛍️ Customer demo</button>
-            <button class="btn btn-ghost btn-sm" type="button" data-demo="farmer">👨‍🌾 Farmer demo</button>
-          </div>
+        <div class="auth-divider"><span>or try a demo account</span></div>
+        <div class="demo-actions">
+          <button class="btn btn-ghost" type="button" data-demo="customer">Customer demo</button>
+          <button class="btn btn-ghost" type="button" data-demo="farmer">Farmer demo</button>
         </div>
 
-        <p class="auth-switch">New here? <a href="register.html">Create an account</a></p>
-        <p class="auth-switch" style="margin-top:8px;"><a href="index.html">← Back to the marketplace</a></p>
-      </section>
-    </div>
+        <p class="auth-switch">New to AgriMart? <a href="register.html">Create an account</a></p>
+        <p class="auth-back"><a href="index.html">← Back to home</a></p>
+      </div>
+    </section>
   </main>
 
   <script src="js/common.js"></script>

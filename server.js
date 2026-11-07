@@ -37,9 +37,18 @@ app.use('/api/orders', orderRoutes);
 app.get('/api/health', async (req, res) => {
   try {
     await pool.query('SELECT 1');
-    res.json({ status: 'ok', database: 'connected' });
+    const status = pool.getStatus();
+    res.json({
+      status: 'ok',
+      database: 'connected',
+      engine: status.engine,
+      isFallback: status.isFallback,
+      host: status.host,
+      port: status.port,
+      dbName: status.database
+    });
   } catch (err) {
-    res.status(500).json({ status: 'error', database: 'unavailable' });
+    res.status(500).json({ status: 'error', database: 'unavailable', error: err.message });
   }
 });
 
@@ -83,9 +92,17 @@ app.listen(PORT, () => {
 
   pool
     .query('SELECT 1')
-    .then(() => console.log('   MySQL: connected'))
-    .catch(() => {
-      console.warn('   MySQL: not reachable');
-      console.warn('   → Create .env from .env.example, import database/schema.sql, then run npm run seed.');
+    .then(() => {
+      const status = pool.getStatus();
+      if (status.engine === 'mysql') {
+        console.log(`   MySQL Database: CONNECTED (${status.host}:${status.port}/${status.database})`);
+      } else {
+        console.log(`   Database: ACTIVE (Fallback Embedded SQLite Mode at database/agri_marketplace.sqlite)`);
+        console.log(`   MySQL Note: MySQL is not currently running on port ${status.port}. The marketplace is using`);
+        console.log(`               the local fallback database so all features, listings and orders work immediately.`);
+      }
+    })
+    .catch((err) => {
+      console.warn('   Database probe error:', err.message);
     });
 });

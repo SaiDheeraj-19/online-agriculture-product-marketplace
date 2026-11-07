@@ -1,12 +1,13 @@
-# 🌾 Online Agriculture Product Marketplace — Saidheeraj
+# Online Agriculture Product Marketplace
 
-**Online Agriculture Product Marketplace** — a full-stack mini project that connects farmers
-with customers. Farmers list agricultural products and keep prices and stock up to date;
-customers browse the marketplace and place orders.
+**AgriMart** is a full-stack marketplace that connects farmers with customers. Farmers list
+agricultural products and keep prices and stock up to date; customers browse the shop and
+place orders.
 
-> **Assignment note:** the project title includes the author name **Saidheeraj**. If your name
-> differs, update the footer of `public/index.html`, `public/farmer.html`, `public/orders.html`
-> and this README heading.
+| Student | Details |
+| --- | --- |
+| **Name** | R Sai Dheeraj |
+| **Roll number** | 24ATA05269 |
 
 ---
 
@@ -91,7 +92,10 @@ The exact schema is in [`database/schema.sql`](database/schema.sql).
 - Parameterised SQL queries throughout.
 - Order placement runs in a MySQL transaction with row locking (`SELECT … FOR UPDATE`),
   stock validation, price snapshots in `order_items`, and automatic stock reduction.
-- Responsive, framework-free frontend (HTML + CSS + vanilla JavaScript).
+- Responsive, framework-free frontend (HTML + CSS + vanilla JavaScript) with a landing page,
+  shop, farmer information, about and credits pages.
+- Product photos are hot-linked from Wikimedia Commons under their free licences
+  (see `public/credits.html`).
 - Friendly API error messages and a demo seed script.
 
 ---
@@ -112,15 +116,20 @@ fsd agriculture/
 │   ├── products.js           # browse, categories, farmer CRUD
 │   └── orders.js             # place order, customer history, farmer orders, status
 ├── public/
-│   ├── index.html            # Marketplace (browse, search, basket, checkout)
+│   ├── index.html            # Landing page
+│   ├── shop.html             # Shop (browse, search, basket, checkout)
+│   ├── sell.html             # Information for farmers
+│   ├── about.html
+│   ├── credits.html          # Photo credits (Wikimedia Commons)
 │   ├── login.html
 │   ├── register.html
 │   ├── farmer.html           # Farmer dashboard
 │   ├── orders.html           # Customer order history
 │   ├── css/style.css
 │   └── js/
-│       ├── common.js         # API helper, session, cart, toasts
-│       ├── index.js
+│       ├── common.js         # API helper, session, cart, photos, navigation
+│       ├── home.js           # Landing page stats and featured products
+│       ├── shop.js
 │       ├── auth.js
 │       ├── farmer.js
 │       └── orders.js
@@ -255,18 +264,15 @@ POST /api/orders
 
 ---
 
-## 7. Uploading to Git (assignment requirement)
+## 7. Source code
+
+The project is hosted on GitHub: <https://github.com/SaiDheeraj-19/online-agriculture-product-marketplace>
 
 ```bash
-git init
-git add .
-git commit -m "Online Agriculture Product Marketplace - Saidheeraj"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<repo-name>.git
-git push -u origin main
+git clone https://github.com/SaiDheeraj-19/online-agriculture-product-marketplace.git
 ```
 
-`.gitignore` already excludes `node_modules/`, `.env` and OS files.
+`.gitignore` excludes `node_modules/`, `.env`, the local SQLite database files and OS files.
 
 ---
 
@@ -279,8 +285,8 @@ git push -u origin main
 - [x] MySQL database with the four required tables
 - [x] Farmers can list products, update prices and stock
 - [x] Customers can browse products and place orders
-- [x] Add your name to the project title (`Saidheeraj`)
-- [ ] Push the project to Git
+- [x] Author name and roll number in the README
+- [x] Push the project to Git
 
 ---
 

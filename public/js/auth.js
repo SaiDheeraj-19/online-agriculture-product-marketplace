@@ -10,10 +10,10 @@
   function destinationFor(user) {
     const next = new URLSearchParams(window.location.search).get('next');
     const safeNext = next && /^[a-z0-9-]+\.html$/i.test(next) ? next : null;
-    const fallback = user.role === 'farmer' ? 'farmer.html' : 'index.html';
+    const fallback = user.role === 'farmer' ? 'farmer.html' : 'shop.html';
 
     if (!safeNext) return fallback;
-    if (safeNext === 'farmer.html' && user.role !== 'farmer') return 'index.html';
+    if (safeNext === 'farmer.html' && user.role !== 'farmer') return 'shop.html';
     if (safeNext === 'orders.html' && user.role !== 'customer') return 'farmer.html';
     return safeNext;
   }
@@ -74,6 +74,11 @@
   const registerForm = document.getElementById('register-form');
 
   if (registerForm) {
+    // register.html?role=farmer pre-selects the farmer option.
+    const presetRole = new URLSearchParams(window.location.search).get('role');
+    const presetInput = registerForm.querySelector(`input[name="role"][value="${presetRole === 'farmer' ? 'farmer' : 'customer'}"]`);
+    if (presetInput) presetInput.checked = true;
+
     const errorBox = document.getElementById('form-error');
     const submitButton = document.getElementById('register-submit');
 
@@ -109,7 +114,7 @@
           method: 'POST',
           body: { name, email, phone, password, role }
         });
-        window.location.href = data.user.role === 'farmer' ? 'farmer.html' : 'index.html';
+        window.location.href = data.user.role === 'farmer' ? 'farmer.html' : 'shop.html';
       } catch (err) {
         showError(errorBox, err.message);
         submitButton.disabled = false;

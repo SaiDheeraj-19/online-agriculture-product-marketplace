@@ -25,24 +25,27 @@
   }
 
   function bindEvents() {
-    document.getElementById('add-product-btn').addEventListener('click', () => openModal());
+    const addBtn = document.getElementById('add-product-btn');
+    if (addBtn) addBtn.addEventListener('click', () => openModal());
 
     document.querySelectorAll('[data-close-modal]').forEach((button) => {
       button.addEventListener('click', closeModal);
     });
 
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) closeModal();
-    });
+    if (modal) {
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeModal();
+      });
+    }
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      if (event.key === 'Escape' && modal && modal.classList.contains('open')) closeModal();
     });
 
-    productForm.addEventListener('submit', saveProduct);
+    if (productForm) productForm.addEventListener('submit', saveProduct);
 
-    productsBody.addEventListener('click', handleProductAction);
-    farmerOrders.addEventListener('change', handleStatusChange);
+    if (productsBody) productsBody.addEventListener('click', handleProductAction);
+    if (farmerOrders) farmerOrders.addEventListener('change', handleStatusChange);
   }
 
   async function loadAll() {
@@ -71,15 +74,19 @@
   }
 
   function renderProducts() {
-    document.getElementById('products-count').textContent = `${products.length} listing${
-      products.length === 1 ? '' : 's'
-    }`;
+    const countEl = document.getElementById('products-count');
+    if (countEl) {
+      countEl.textContent = `${products.length} listing${products.length === 1 ? '' : 's'} managed`;
+    }
+
+    if (!productsBody) return;
 
     if (products.length === 0) {
       productsBody.innerHTML = `
         <tr>
-          <td colspan="5" class="muted center" style="padding:34px 12px;">
-            No products yet. Click “Add product” to create your first listing.
+          <td colspan="5" class="muted center" style="padding:48px 16px;">
+            <strong style="color:var(--forest-950);font-size:16px;">No produce listed yet</strong>
+            <p class="small" style="margin-top:4px;">Use “Add product” to create your first listing.</p>
           </td>
         </tr>`;
       return;
@@ -88,17 +95,17 @@
     productsBody.innerHTML = products
       .map((product) => {
         const quantity = Number(product.quantity) || 0;
-        const stockClass = quantity === 0 ? 'zero' : quantity < 10 ? 'low' : '';
-        const stockLabel = quantity === 0 ? 'Out of stock' : `${quantity} units`;
+        const stockClass = quantity === 0 ? 'zero' : quantity < 20 ? 'low' : '';
+        const stockLabel = quantity === 0 ? 'Out of Stock' : `${quantity} in stock`;
         const snippet = product.description
-          ? `${product.description.slice(0, 46)}${product.description.length > 46 ? '…' : ''}`
-          : 'No description';
+          ? `${product.description.slice(0, 52)}${product.description.length > 52 ? '…' : ''}`
+          : 'Farm-fresh harvest';
 
         return `
           <tr>
             <td>
               <div class="table-product">
-                <span class="mini-thumb" aria-hidden="true">${Agri.emojiFor(product.category)}</span>
+                <span class="mini-thumb" aria-hidden="true"><img src="${Agri.imageFor(product)}" alt="" loading="lazy" onerror="this.remove()" /></span>
                 <span>
                   <strong>${Agri.escapeHtml(product.product_name)}</strong>
                   <small>${Agri.escapeHtml(snippet)}</small>
@@ -106,7 +113,7 @@
               </div>
             </td>
             <td><span class="badge">${Agri.escapeHtml(product.category)}</span></td>
-            <td>${Agri.money(product.price)}</td>
+            <td><strong style="font-family:var(--font-mono);font-size:15px;color:var(--forest-950);">${Agri.money(product.price)}</strong></td>
             <td><span class="stock-pill ${stockClass}">${stockLabel}</span></td>
             <td>
               <div class="table-actions">
@@ -120,16 +127,18 @@
   }
 
   function renderOrders() {
-    document.getElementById('orders-count').textContent = `${orders.length} order${
-      orders.length === 1 ? '' : 's'
-    }`;
+    const countEl = document.getElementById('orders-count');
+    if (countEl) {
+      countEl.textContent = `${orders.length} customer order${orders.length === 1 ? '' : 's'}`;
+    }
+
+    if (!farmerOrders) return;
 
     if (orders.length === 0) {
       farmerOrders.innerHTML = `
-        <div class="empty-state" style="border:none;padding:34px 16px;">
-          <span class="empty-emoji" aria-hidden="true">📦</span>
-          <h3>No orders yet</h3>
-          <p>When a customer orders your produce, it will appear here.</p>
+        <div class="empty-state" style="border:none;padding:48px 16px;">
+          <h3>No customer orders yet</h3>
+          <p>Orders that include your produce will show up here.</p>
         </div>`;
       return;
     }
@@ -147,17 +156,21 @@
           <div class="farmer-order">
             <div class="farmer-order-head">
               <div>
-                <h3>Order #${order.order_id}</h3>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span class="mono" style="font-weight:800;color:var(--forest-950);font-size:16px;">Order #${order.order_id}</span>
+                  <span class="status status-${status.toLowerCase()}">${status}</span>
+                </div>
                 <p class="order-meta">
-                  ${Agri.formatDate(order.order_date)} · ${Agri.escapeHtml(
-          order.customer_name
-        )}${phone}
+                  ${Agri.formatDate(order.order_date)} · <strong>${Agri.escapeHtml(order.customer_name)}</strong>${phone}
                 </p>
               </div>
-              <select class="status-select" data-order-id="${order.order_id}" data-previous="${status}"
-                aria-label="Status for order ${order.order_id}">
-                ${options}
-              </select>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:12px;font-weight:700;color:var(--muted);">Update Status:</span>
+                <select class="status-select" data-order-id="${order.order_id}" data-previous="${status}"
+                  aria-label="Status for order ${order.order_id}">
+                  ${options}
+                </select>
+              </div>
             </div>
             <div class="farmer-order-items">
               ${order.items
@@ -170,10 +183,10 @@
                 .join('')}
             </div>
             <div class="farmer-order-foot">
-              <span class="farmer-share">Your share
+              <span class="farmer-share">Your Farm Payout:
                 <strong>${Agri.money(order.farmer_total)}</strong>
               </span>
-              <span class="order-meta">📍 ${Agri.escapeHtml(order.delivery_address)}</span>
+              <span class="order-meta">${Agri.escapeHtml(order.delivery_address)}</span>
             </div>
           </div>`;
       })
@@ -186,16 +199,24 @@
       .filter((order) => order.status !== 'Cancelled')
       .reduce((sum, order) => sum + (Number(order.farmer_total) || 0), 0);
 
-    document.getElementById('stat-products').textContent = String(products.length);
-    document.getElementById('stat-stock').textContent = String(totalStock);
-    document.getElementById('stat-orders').textContent = String(orders.length);
-    document.getElementById('stat-revenue').textContent = Agri.money(revenue);
+    const statProd = document.getElementById('stat-products');
+    const statStock = document.getElementById('stat-stock');
+    const statOrd = document.getElementById('stat-orders');
+    const statRev = document.getElementById('stat-revenue');
+
+    if (statProd) statProd.textContent = String(products.length);
+    if (statStock) statStock.textContent = String(totalStock);
+    if (statOrd) statOrd.textContent = String(orders.length);
+    if (statRev) statRev.textContent = Agri.money(revenue);
   }
 
   function openModal(product) {
+    if (!productForm || !modalTitle || !submitButton || !modal) return;
     productForm.reset();
-    productError.hidden = true;
-    productError.textContent = '';
+    if (productError) {
+      productError.hidden = true;
+      productError.textContent = '';
+    }
 
     if (product) {
       productForm.elements.product_id.value = product.product_id;
@@ -204,21 +225,24 @@
       productForm.elements.price.value = product.price;
       productForm.elements.quantity.value = product.quantity;
       productForm.elements.description.value = product.description || '';
-      modalTitle.textContent = 'Edit product';
-      submitButton.textContent = 'Save changes';
+      modalTitle.textContent = 'Edit Produce Listing';
+      submitButton.textContent = 'Save Changes';
     } else {
       productForm.elements.product_id.value = '';
-      modalTitle.textContent = 'Add product';
-      submitButton.textContent = 'Save product';
+      modalTitle.textContent = 'List New Produce';
+      submitButton.textContent = 'List Produce';
     }
 
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('no-scroll');
-    setTimeout(() => productForm.elements.product_name.focus(), 60);
+    setTimeout(() => {
+      if (productForm.elements.product_name) productForm.elements.product_name.focus();
+    }, 60);
   }
 
   function closeModal() {
+    if (!modal) return;
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('no-scroll');
@@ -226,7 +250,7 @@
 
   async function saveProduct(event) {
     event.preventDefault();
-    productError.hidden = true;
+    if (productError) productError.hidden = true;
 
     const productId = productForm.elements.product_id.value;
     const payload = {
@@ -237,7 +261,7 @@
       description: productForm.elements.description.value.trim()
     };
 
-    const label = productId ? 'Save changes' : 'Save product';
+    const label = productId ? 'Save Changes' : 'List Produce';
     submitButton.disabled = true;
     submitButton.textContent = 'Saving…';
 
@@ -246,13 +270,15 @@
         ? await Agri.api(`/api/products/${productId}`, { method: 'PUT', body: payload })
         : await Agri.api('/api/products', { method: 'POST', body: payload });
 
-      Agri.toast(data.message || 'Product saved.');
+      Agri.toast(data.message || 'Produce listing updated successfully.');
       closeModal();
       await loadProducts();
       renderStats();
     } catch (err) {
-      productError.textContent = err.message;
-      productError.hidden = false;
+      if (productError) {
+        productError.textContent = err.message;
+        productError.hidden = false;
+      }
     } finally {
       submitButton.disabled = false;
       submitButton.textContent = label;
@@ -260,34 +286,33 @@
   }
 
   async function handleProductAction(event) {
-    const editButton = event.target.closest('[data-edit]');
-    if (editButton) {
-      const product = products.find(
-        (entry) => entry.product_id === Number(editButton.dataset.edit)
-      );
+    const editBtn = event.target.closest('[data-edit]');
+    if (editBtn) {
+      const id = Number(editBtn.dataset.edit);
+      const product = products.find((entry) => entry.product_id === id);
       if (product) openModal(product);
       return;
     }
 
-    const deleteButton = event.target.closest('[data-delete]');
-    if (!deleteButton) return;
+    const deleteBtn = event.target.closest('[data-delete]');
+    if (deleteBtn) {
+      const id = Number(deleteBtn.dataset.delete);
+      const product = products.find((entry) => entry.product_id === id);
+      const name = product ? product.product_name : 'this product';
+      if (!window.confirm(`Are you sure you want to remove "${name}" from the marketplace?`)) {
+        return;
+      }
 
-    const product = products.find(
-      (entry) => entry.product_id === Number(deleteButton.dataset.delete)
-    );
-    if (!product) return;
-
-    if (!window.confirm(`Remove "${product.product_name}" from your listings?`)) return;
-
-    deleteButton.disabled = true;
-    try {
-      const data = await Agri.api(`/api/products/${product.product_id}`, { method: 'DELETE' });
-      Agri.toast(data.message || 'Product removed.');
-      await loadProducts();
-      renderStats();
-    } catch (err) {
-      Agri.toast(err.message, 'error');
-      deleteButton.disabled = false;
+      deleteBtn.disabled = true;
+      try {
+        await Agri.api(`/api/products/${id}`, { method: 'DELETE' });
+        Agri.toast(`"${name}" removed from marketplace.`);
+        await loadProducts();
+        renderStats();
+      } catch (err) {
+        Agri.toast(err.message, 'error');
+        deleteBtn.disabled = false;
+      }
     }
   }
 
@@ -296,21 +321,23 @@
     if (!select) return;
 
     const orderId = Number(select.dataset.orderId);
-    const status = select.value;
+    const nextStatus = select.value;
     const previous = select.dataset.previous;
 
     select.disabled = true;
     try {
-      const data = await Agri.api(`/api/orders/${orderId}/status`, {
+      await Agri.api(`/api/orders/${orderId}/status`, {
         method: 'PATCH',
-        body: { status }
+        body: { status: nextStatus }
       });
-      Agri.toast(data.message || 'Order status updated.');
+      select.dataset.previous = nextStatus;
+      Agri.toast(`Order #${orderId} marked as ${nextStatus}.`);
       await loadOrders();
       renderStats();
     } catch (err) {
       Agri.toast(err.message, 'error');
       select.value = previous;
+    } finally {
       select.disabled = false;
     }
   }

@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "seed": "node database/seed.js"
+    "seed": "node database/seed.js",
+    "mysql": "node scripts/db-shell.js",
+    "mysql:check": "node scripts/check-mysql.js",
+    "db:shell": "node scripts/db-shell.js"
   },
   "keywords": [
     "agriculture",
